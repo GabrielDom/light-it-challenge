@@ -1,30 +1,22 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Light-It Challenge
 
-Currently, two official plugins are available:
+This challenge is about a frontend application that enables users to manage patient data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The app is made with React, TypeScript, Vite , Tailwind css and Shadcn/ui (components built with Radix UI and Tailwind CSS)
 
-## Expanding the ESLint configuration
+You can see it here: https://silver-pasca-38edf2.netlify.app/
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Configuration
 
-- Configure the top-level `parserOptions` property like this:
+If you want to run this app locally, you need at least Node 18 installed. Once you have cloned the repo and run `npm install` , just run `npm run dev` and you will see it in http://localhost:yourportofchoice
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Libraries/tools
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Tailwind css
+- Shadcn/ui
+- Formik
+- Yup
+
+The reason why I used Tailwind css and Shadcn/ui is because I have never used them before and I took advantage of this challenge to give it a try. Furthermore, I used Formik to manage in a fast and simple way the forms and Yup as validation form since is a tool which I feel comfortable with and I believe it's reliable.
