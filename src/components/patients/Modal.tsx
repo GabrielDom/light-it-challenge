@@ -3,9 +3,9 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
 
 interface ModalProps {
+  children: ReactNode;
   isOpen: boolean;
   onClose?: () => void;
-  children: ReactNode;
   title: string;
 }
 
@@ -21,12 +21,10 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose, title }) => {
   }
 
   return (
-    <dialog
-      className={`fixed inset-0 flex items-center justify-center backdrop-blur bg-opacity-50 bg-gray-900 rounded-lg transition delay-100 duration-300 ease-in-out`}
-    >
+    <dialog className="fixed inset-0 flex items-center justify-center backdrop-blur bg-opacity-50 bg-gray-900 rounded-lg transition delay-100 duration-300 ease-in-out">
       <Card
         onKeyUp={onKeyDown}
-        className={`max-w-lg rounded-lg transition delay-100 duration-300 ease-in-out`}
+        className="w-80 rounded-lg transition delay-100 duration-300 ease-in-out"
       >
         <CardHeader className="flex flex-row items-center justify-between">
           <h2 className="mt-2 scroll-m-20 text-2xl font-bold tracking-tight text-center">

@@ -12,10 +12,9 @@ const PatientProvider: React.FC<PatientProviderProps> = ({ children }) => {
     "https://63bedcf7f5cfc0949b634fc8.mockapi.io/users"
   );
   const [patientData, setPatientData] = useState<Patient[]>(data);
-  const [addModal, setAddModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [editItemId, setEditItemId] = useState<number | null>(null);
-  const [notification, setNotification] = useState<boolean>(false);
 
   useEffect(() => {
     if (data) {
@@ -41,7 +40,7 @@ const PatientProvider: React.FC<PatientProviderProps> = ({ children }) => {
   };
 
   const handleAddModal = () => {
-    setAddModal(!addModal);
+    setShowModal(!showModal);
   };
 
   const handleEditModal = () => {
@@ -55,15 +54,13 @@ const PatientProvider: React.FC<PatientProviderProps> = ({ children }) => {
         loading,
         error,
         addPatient,
-        addModal,
+        showModal,
         editModal,
         handleAddModal,
         updatePatient,
         handleEditModal,
         editItemId,
         setEditItemId,
-        notification,
-        setNotification,
       }}
     >
       {children}

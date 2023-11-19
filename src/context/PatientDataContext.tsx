@@ -3,18 +3,16 @@ import { Patient } from "../services/types";
 
 export type DataContextProps = {
   data: Patient[];
-  loading: boolean;
   error: boolean;
+  loading: boolean;
   addPatient: (user: Patient) => void;
-  addModal: boolean;
+  updatePatient: (item: Patient) => void;
+  showModal: boolean;
   editModal: boolean;
   handleAddModal: () => void;
   handleEditModal: () => void;
   editItemId: number | null;
   setEditItemId: Dispatch<SetStateAction<number | null>>;
-  updatePatient: (item: Patient) => void;
-  notification: boolean;
-  setNotification: Dispatch<SetStateAction<boolean>>;
 };
 
 export const PatientContext = createContext<DataContextProps>(

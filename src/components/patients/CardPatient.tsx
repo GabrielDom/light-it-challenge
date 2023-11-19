@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { PatientContext } from "../../context/PatientDataContext";
-import EditPatient from "./EditPatient";
+import EditPatientForm from "./EditPatientForm";
 import { Patient } from "../../services/types";
 import Modal from "./Modal";
 import Pagination from "../pagination/Pagination";
@@ -115,7 +115,7 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
                   onClose={closeModal}
                   title={"Edit patient data"}
                 >
-                  <EditPatient item={data} onSave={handlePatientUpdate} />
+                  <EditPatientForm item={data} onSave={handlePatientUpdate} />
                 </Modal>
               )}
             </CardFooter>
@@ -123,15 +123,15 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
         ))
       )}
       <div
-        className="block"
-        style={{
-          position: "relative",
-          top: "100%",
-          right: "50%",
-          marginBottom: "0",
-          marginTop: "10%",
-          height: "15%",
-        }}
+        className="sm:block md:relative md:top-full md:right-2/4 md:mb-0 md:mt-4 md:h-10"
+        // style={{
+        //   position: "relative",
+        //   top: "100%",
+        //   right: "50%",
+        //   marginBottom: "0",
+        //   marginTop: "10%",
+        //   height: "15%",
+        // }}
       >
         <Pagination
           patientsPerPage={patientsPerPage}

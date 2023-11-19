@@ -10,8 +10,7 @@ import { Textarea } from "../ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 
 const AddPatientForm = () => {
-  const { addPatient, handleAddModal, setNotification } =
-    useContext(PatientContext);
+  const { addPatient, handleAddModal } = useContext(PatientContext);
   const { toast } = useToast();
 
   const validationSchema = Yup.object({
@@ -42,11 +41,9 @@ const AddPatientForm = () => {
 
       resetForm();
       handleAddModal();
-      // setNotification(true);
       toast({
         title: "New patient added 👨‍⚕️",
       });
-      setTimeout(() => setNotification(false), 3000);
     },
   });
 

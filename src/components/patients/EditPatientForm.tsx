@@ -1,110 +1,128 @@
 import React from "react";
-import {
-  //   ErrorMessage,
-  //   Field,
-  //   Form,
-  //   Formik,
-  useFormik,
-} from "formik";
-import { Patient, PatientUpdate } from "../../services/types";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { useForm } from "react-hook-form";
-// import * as z from "zod";
-import { Button } from "@/components/ui/button";
-// import usePatients from "@/hooks/usePatients";
-// import {
-//   Form,
-//   FormControl,
-//   FormDescription,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form";
-// import { Input } from "@/components/ui/input";
+import { useContext } from "react";
+import { PatientContext } from "../../context/PatientDataContext";
+import { Patient } from "../../services/types";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
+import { DialogFooter } from "../ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 
-interface EditPatientFormProps {
-  patient?: Patient | undefined;
-  onClose: () => void;
-  onSubmit: (editedPatient: Patient) => void;
-  localPatients: Patient[];
+interface EditPatientProps {
+  item: Patient;
+  onSave: (item: Patient) => void;
 }
 
-const EditPatientForm: React.FC<EditPatientFormProps> = ({
-  patient,
-  onClose,
-  onSubmit,
-}) => {
-  const initialValues: PatientUpdate = patient || {
-    name: "",
-    description: "",
-    website: "",
-  };
+const EditPatientForm: React.FC<EditPatientProps> = ({ item, onSave }) => {
+  const { handleEditModal } = useContext(PatientContext);
+  const { toast } = useToast();
+
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(3, "Name must be at least 3 characters")
+      .required("Name is required"),
+    description: Yup.string()
+      .min(3, "Description must be at least 3 characters")
+      .required("Description is required"),
+    website: Yup.string()
+      .min(3, "Website must be at least 3 characters")
+      .required("Website is required"),
+  });
+
   const formik = useFormik({
-    initialValues,
-    onSubmit: async (values) => {
-      const updatedPatient = {
-        createdAt: values.createdAt || patient?.createdAt || new Date(),
-        name: values.name || patient?.name || "",
-        avatar: values.avatar || patient?.avatar || "",
-        description: values.description || patient?.description || "",
-        website: values.website || patient?.website || "",
-        id: values.id || patient?.id || "",
-      };
-      onSubmit(updatedPatient);
-      onClose();
+    initialValues: {
+      name: item.name || "",
+      description: item.description || "",
+      website: item.website || "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      onSave({
+        ...item,
+        ...values,
+      });
+      handleEditModal();
+      toast({
+        title: "Patient updated successfully 🎉",
+      });
     },
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    formik.setFieldValue(name, value);
-  };
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <h3 className="mt-2 scroll-m-20 text-2xl font-semibold tracking-tight text-center text-zinc-500">
-        Edit patient
-      </h3>
-      <div className="flex flex-col mb-4 text-zinc-500">
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={formik.values.name}
-            onChange={handleChange}
-            className="block w-full border rounded-md p-2"
-          />
-        </label>
-        <label>
-          Description:
-          <input
-            type="text"
-            name="description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            className="block w-full border rounded-md p-2"
-          />
-        </label>
-        <label>
-          Website:
-          <input
+    <div>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="my-4 w-full sm:mr-4 flex flex-col">
+          <div
+            className={`grid grid-cols-4 items-center gap-4 ${
+              formik.touched.name && formik.errors.name
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          >
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              className="col-span-3"
+              placeholder="Name"
+              type="text"
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </div>
+          <p className="text-red-600 mt-2">
+            {formik.touched.name && formik.errors.name}
+          </p>
+        </div>
+        <div className="mt-4 mb-12 h-32 w-full sm:mr-4 flex flex-col gap-2">
+          <div
+            className={`grid w-full gap-1.5 ${
+              formik.touched.description && formik.errors.description
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          >
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              placeholder="Description"
+              className="resize-none"
+              name="description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </div>
+          <p className="text-red-600">
+            {formik.touched.description && formik.errors.description}
+          </p>
+        </div>
+        <div className="my-4 w-full sm:mr-4 flex flex-col gap-2">
+          <Label htmlFor="website">Website</Label>
+          <Input
+            id="website"
+            className="col-span-3"
+            placeholder="Website"
             type="text"
             name="website"
             value={formik.values.website}
             onChange={formik.handleChange}
-            className="block w-full border rounded-md p-2"
+            onBlur={formik.handleBlur}
           />
-        </label>
-      </div>
-      <Button type="button" onClick={onClose} className="bg-destructive">
-        Cancel
-      </Button>
-      <Button type="submit" className="bg-primary">
-        Submit
-      </Button>
-    </form>
+          <p className="text-red-600">
+            {formik.touched.website && formik.errors.website}
+          </p>
+        </div>
+        <DialogFooter>
+          <Button type="submit" disabled={!formik.isValid} className="w-full">
+            Submit
+          </Button>
+        </DialogFooter>
+      </form>
+    </div>
   );
 };
 
