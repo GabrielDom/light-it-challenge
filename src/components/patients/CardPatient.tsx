@@ -67,7 +67,7 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
         </Card>
       ) : (
         currentPatients.map((data: Patient) => (
-          <Card key={data?.id} className="shadow-2xl">
+          <Card key={data?.id} className="shadow-2xl mr-4 md:mr-0">
             <CardHeader>
               <h3 className="mt-4 mb-4 scroll-m-20 text-2xl font-bold tracking-tight">
                 {" "}
@@ -77,20 +77,20 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
                 src={data?.avatar}
                 alt={data?.name}
                 loading="lazy"
-                className="rounded-lg shadow-lg w-2/4 my-0 mx-auto"
+                className="rounded-lg shadow-lg w-2/4 mx-auto"
               />
-              <CardDescription>
-                <span className="font-bold tracking-tight mt-2">Website:</span>{" "}
-                {data?.website}
-                <br />
-                <span className="font-bold tracking-tight">
-                  Creation date:
-                </span>{" "}
-                {data && data.createdAt
-                  ? formatCreatedAt(data.createdAt)
-                  : "No creation date"}
-              </CardDescription>
             </CardHeader>
+            <CardDescription>
+              <span className="font-bold tracking-tight">Website:</span>{" "}
+              {data?.website}
+              <br />
+              <span className="font-bold tracking-tight">
+                Creation date:
+              </span>{" "}
+              {data && data.createdAt
+                ? formatCreatedAt(data.createdAt)
+                : "No creation date"}
+            </CardDescription>
             <Collapsible>
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="icon" className="w-9 p-0">
