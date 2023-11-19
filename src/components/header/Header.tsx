@@ -3,6 +3,7 @@ import { PatientContext } from "../../context/PatientDataContext";
 import AddPatientForm from "../../components/patients/AddPatientForm";
 import Modal from "../../components/patients/Modal";
 import { ModeToggle } from "../mode-toggle";
+import { Button } from "../ui/button";
 
 const Header = () => {
   const { addModal, handleAddModal } = useContext(PatientContext);
@@ -19,14 +20,13 @@ const Header = () => {
     <header className="bg-slate-700 p-6">
       <nav className="flex flex-row justify-between">
         <ModeToggle />
-        <h1 className="text-white text-2xl">Patient Data Management</h1>
-        <button
-          className="text-white p-2 flex align-center gap-2 border rounded-lg border-white"
-          onClick={openModal}
-        >
-          <span>Add New User</span>+
-        </button>
-        <Modal isOpen={addModal} onClose={closeModal} title="Add new user">
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight">
+          Patient Data Management
+        </h1>
+        <Button onClick={openModal}>
+          <span>Add new patient</span>
+        </Button>
+        <Modal isOpen={addModal} onClose={closeModal} title="Add patient">
           <AddPatientForm />
         </Modal>
       </nav>

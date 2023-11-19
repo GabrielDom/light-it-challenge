@@ -18,6 +18,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { Skeleton } from "../ui/skeleton";
 
 interface CardPatientProps {
   patients: Patient[];
@@ -61,12 +62,14 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
   return (
     <>
       {loading ? (
-        <p>Loading...</p>
+        <Card className="flex items-center justify-center">
+          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        </Card>
       ) : (
         currentPatients.map((data: Patient) => (
-          <Card key={data?.id}>
+          <Card key={data?.id} className="shadow-2xl">
             <CardHeader>
-              <h3 className="mt-4 scroll-m-20 text-2xl font-bold tracking-tight">
+              <h3 className="mt-4 mb-4 scroll-m-20 text-2xl font-bold tracking-tight">
                 {" "}
                 {data?.name}
               </h3>
@@ -74,14 +77,10 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
                 src={data?.avatar}
                 alt={data?.name}
                 loading="lazy"
-                style={{
-                  width: "50%",
-                  margin: "0 auto",
-                  objectFit: "none",
-                }}
+                className="rounded-lg shadow-lg w-2/4 my-0 mx-auto"
               />
               <CardDescription>
-                <span className="font-bold tracking-tight">Website:</span>{" "}
+                <span className="font-bold tracking-tight mt-2">Website:</span>{" "}
                 {data?.website}
                 <br />
                 <span className="font-bold tracking-tight">
@@ -96,7 +95,6 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="icon" className="w-9 p-0">
                   <ChevronsUpDown className="h-4 w-4" />
-                  <span className="sr-only">Toggle</span>
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent>
@@ -106,29 +104,42 @@ const CardPatient: React.FC<CardPatientProps> = ({ patients }) => {
             <CardFooter>
               <Button
                 onClick={() => openEditModal(Number(data?.id))}
-                className="h-1/2 m-auto"
+                className="h-1/2 m-auto mt-2"
+                variant="outline"
               >
-                Edit patient
+                Edit patient 🖋️
               </Button>
               {editModal && itemId === Number(data?.id) && (
                 <Modal
                   isOpen={editModal}
                   onClose={closeModal}
-                  title={"Edit user data"}
+                  title={"Edit patient data"}
                 >
-                  <EditPatient item={data} onSave={handlePatientUpdate} />{" "}
+                  <EditPatient item={data} onSave={handlePatientUpdate} />
                 </Modal>
               )}
             </CardFooter>
           </Card>
         ))
       )}
-      <Pagination
-        patientsPerPage={patientsPerPage}
-        totalPatients={patients?.length}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <div
+        className="block"
+        style={{
+          position: "relative",
+          top: "100%",
+          right: "50%",
+          marginBottom: "0",
+          marginTop: "10%",
+          height: "15%",
+        }}
+      >
+        <Pagination
+          patientsPerPage={patientsPerPage}
+          totalPatients={patients?.length}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
     </>
   );
 };

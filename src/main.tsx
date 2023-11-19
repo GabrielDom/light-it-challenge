@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import PatientsContainers from "./components/patients/PatientsContainer.tsx";
 import PatientProvider from "./context/PatientDataProvider.tsx";
 import Header from "./components/header/Header.tsx";
+import { Toaster } from "./components/ui/toaster.tsx";
 
 Modal.setAppElement("#root");
 
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <PatientProvider>
           <Header />
           <PatientsContainers />
+          <Toaster />
         </PatientProvider>
         {/* <App /> */}
         {/* <PatientsList /> */}

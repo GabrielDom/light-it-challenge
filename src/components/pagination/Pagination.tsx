@@ -1,4 +1,5 @@
 import React from "react";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 interface PaginationProps {
   patientsPerPage: number;
@@ -10,7 +11,7 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({
   patientsPerPage,
   totalPatients,
-  currentPage,
+  // currentPage,
   setCurrentPage,
 }) => {
   const pageNumbers = [];
@@ -20,23 +21,18 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <nav>
-      <ul className="pagination flex">
-        {pageNumbers.map((number) => (
-          <li
-            key={number}
-            className={`page-item ${currentPage === number ? "active" : ""}`}
-          >
-            <button
-              onClick={() => setCurrentPage(number)}
-              className="page-link"
-            >
-              {number}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <ToggleGroup type="single">
+      {pageNumbers.map((number) => (
+        <ToggleGroupItem
+          key={number}
+          value={number.toString()}
+          aria-label={`Go to page ${number}`}
+          onClick={() => setCurrentPage(number)}
+        >
+          {number}
+        </ToggleGroupItem>
+      ))}
+    </ToggleGroup>
   );
 };
 

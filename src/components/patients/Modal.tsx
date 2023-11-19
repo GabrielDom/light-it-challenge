@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
-import ReactDOM from "react-dom";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader } from "../ui/card";
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,41 +16,27 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose, title }) => {
     }
   };
 
-  //   useEffect(() => {
-  //     if (isOpen) {
-  //       const interactiveElements = modalRef.current?.querySelectorAll(
-  //         "input, select, textarea, a, [tabindex]"
-  //       );
-
-  //       if (interactiveElements) {
-  //         const firstInteractiveElement = interactiveElements[0];
-  //         if (firstInteractiveElement instanceof HTMLElement) {
-  //           firstInteractiveElement.focus();
-  //         }
-  //       }
-  //     }
-  //   }, [isOpen]);
-
   if (!isOpen) {
     return null;
   }
 
-  return ReactDOM.createPortal(
-    <dialog className="fixed top-0 left-0 w-full h-full flex align-center justify-center bg-background-modal">
-      <div
-        className="text-center max-[920px]:w-3/4 w-2/4 h-2/4 bg-white m-auto p-auto shadow-md flex flex-col rounded-lg p-4"
+  return (
+    <dialog
+      className={`fixed inset-0 flex items-center justify-center backdrop-blur bg-opacity-50 bg-gray-900 rounded-lg transition delay-100 duration-300 ease-in-out`}
+    >
+      <Card
         onKeyUp={onKeyDown}
+        className={`max-w-lg rounded-lg transition delay-100 duration-300 ease-in-out`}
       >
-        <div className="flex flex-row justify-between bg-slate-300 p-4">
-          <h2 className="text-xl font-medium">{title}</h2>
-          <button onClick={onClose} className="text-black">
-            X
-          </button>
-        </div>
-        {children}
-      </div>
-    </dialog>,
-    document.getElementById("root") as HTMLElement
+        <CardHeader className="flex flex-row items-center justify-between">
+          <h2 className="mt-2 scroll-m-20 text-2xl font-bold tracking-tight text-center">
+            {title}
+          </h2>
+          <Button onClick={onClose}>X</Button>
+        </CardHeader>
+        <CardContent>{children}</CardContent>
+      </Card>
+    </dialog>
   );
 };
 
